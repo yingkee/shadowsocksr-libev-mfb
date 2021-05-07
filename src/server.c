@@ -1658,7 +1658,7 @@ main(int argc, char **argv)
             nofile = jconf->nofile;
         }
 #endif
-        if (conf->nameserver != NULL) {
+        if (jconf->nameserver != NULL) {
             nameservers[nameserver_num++] = jconf->nameserver;
         }
         if (ipv6first == 0) {
@@ -1796,7 +1796,7 @@ main(int argc, char **argv)
         // Setup UDP
         if (mode != TCP_ONLY) {
             init_udprelay(server_host[index], server_port, mtu,
-                          atoi(timeout), iface, NULL, NULL);
+                          atoi(timeout), iface,&cipher_env, NULL, NULL);
         }
 
         if (host && strcmp(host, ":") > 0)
