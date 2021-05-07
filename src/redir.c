@@ -1062,61 +1062,62 @@ main(int argc, char **argv)
     }
 
     if (conf_path != NULL) {
-        jconf_t *conf = read_jconf(conf_path);
+        jconf_t *jconf = read_jconf(conf_path);
+	ss_server_legacy_t conf = jconf->server_legacy;
         if (remote_num == 0) {
-            remote_num = conf->remote_num;
+            remote_num = conf.remote_num;
             for (i = 0; i < remote_num; i++)
-                remote_addr[i] = conf->remote_addr[i];
+                remote_addr[i] = conf.remote_addr[i];
         }
         if (remote_port == NULL) {
-            remote_port = conf->remote_port;
+            remote_port = conf.remote_port;
         }
         if (local_addr == NULL) {
-            local_addr = conf->local_addr;
+            local_addr = conf.local_addr;
         }
         if (local_port == NULL) {
-            local_port = conf->local_port;
+            local_port = conf.local_port;
         }
         if (password == NULL) {
-            password = conf->password;
+            password = conf.password;
         }
         // SSR beg
         if (protocol == NULL) {
-            protocol = conf->protocol;
+            protocol = conf.protocol;
             LOGI("protocol %s", protocol);
         }
         if (protocol_param == NULL) {
-            protocol_param = conf->protocol_param;
+            protocol_param = conf.protocol_param;
             LOGI("protocol_param %s", protocol_param);
         }
         if (method == NULL) {
-            method = conf->method;
+            method = conf.method;
             LOGI("method %s", method);
         }
         if (obfs == NULL) {
-            obfs = conf->obfs;
+            obfs = conf.obfs;
             LOGI("obfs %s", obfs);
         }
         if (obfs_param == NULL) {
-            obfs_param = conf->obfs_param;
+            obfs_param = conf.obfs_param;
             LOGI("obfs_param %s", obfs_param);
         }
         // SSR end
         if (timeout == NULL) {
-            timeout = conf->timeout;
+            timeout = jconf->timeout;
         }
         if (user == NULL) {
-            user = conf->user;
+            user = jconf->user;
         }
         if (mtu == 0) {
-            mtu = conf->mtu;
+            mtu = jconf->mtu;
         }
         if (mptcp == 0) {
-            mptcp = conf->mptcp;
+            mptcp = jconf->mptcp;
         }
 #ifdef HAVE_SETRLIMIT
         if (nofile == 0) {
-            nofile = conf->nofile;
+            nofile = jconf->nofile;
     	}
         /*
          * no need to check the return value here since we will show
@@ -1239,7 +1240,7 @@ main(int argc, char **argv)
     if (mode != TCP_ONLY) {
         LOGI("UDP relay enabled");
         init_udprelay(local_addr, local_port, listen_ctx.remote_addr[0],
-                      get_sockaddr_len(listen_ctx.remote_addr[0]), mtu, listen_ctx.timeout, NULL, protocol, protocol_param);
+                      get_sockaddr_len(listen_ctx.remote_addr[0]), mtu, listen_ctx.timeout, NULL,&cipher_env, protocol, protocol_param);
     }
 
     if (mode == UDP_ONLY) {
