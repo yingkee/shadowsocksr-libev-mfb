@@ -1000,7 +1000,8 @@ main(int argc, char **argv)
     }
 
     if (conf_path != NULL) {
-        jconf_t *conf = read_jconf(conf_path);
+        jconf_t *jconf = read_jconf(conf_path);
+	ss_server_legacy_t *conf = jconf->server_legacy;
         if (remote_num == 0) {
             remote_num = conf->remote_num;
             for (i = 0; i < remote_num; i++)
