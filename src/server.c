@@ -1617,51 +1617,52 @@ main(int argc, char **argv)
     }
 
     if (conf_path != NULL) {
-        jconf_t *conf = read_jconf(conf_path);
+        jconf_t *jconf = read_jconf(conf_path);
+	ss_server_legacy_t conf = jconf->server_legacy;
         if (server_num == 0) {
-            server_num = conf->remote_num;
+            server_num = conf.remote_num;
             for (i = 0; i < server_num; i++)
-                server_host[i] = conf->remote_addr[i].host;
+                server_host[i] = conf.remote_addr[i].host;
         }
         if (server_port == NULL) {
-            server_port = conf->remote_port;
+            server_port = conf.remote_port;
         }
         if (password == NULL) {
-            password = conf->password;
+            password = conf.password;
         }
         if (method == NULL) {
-            method = conf->method;
+            method = conf.method;
         }
         if (timeout == NULL) {
-            timeout = conf->timeout;
+            timeout = jconf->timeout;
         }
         if (user == NULL) {
-            user = conf->user;
+            user = jconf->user;
         }
         if (mode == TCP_ONLY) {
-            mode = conf->mode;
+            mode = jconf->mode;
         }
         if (mtu == 0) {
-            mtu = conf->mtu;
+            mtu = jconf->mtu;
         }
         if (mptcp == 0) {
-            mptcp = conf->mptcp;
+            mptcp = jconf->mptcp;
         }
 #ifdef TCP_FASTOPEN
         if (fast_open == 0) {
-            fast_open = conf->fast_open;
+            fast_open = jconf->fast_open;
         }
 #endif
 #ifdef HAVE_SETRLIMIT
         if (nofile == 0) {
-            nofile = conf->nofile;
+            nofile = jconf->nofile;
         }
 #endif
         if (conf->nameserver != NULL) {
-            nameservers[nameserver_num++] = conf->nameserver;
+            nameservers[nameserver_num++] = jconf->nameserver;
         }
         if (ipv6first == 0) {
-            ipv6first = conf->ipv6_first;
+            ipv6first = jconf->ipv6_first;
         }
     }
 
