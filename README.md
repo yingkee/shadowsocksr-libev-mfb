@@ -325,6 +325,12 @@ make && make install
 ./configure --prefix="$HOME/ss" --with-crypto-library=polarssl --with-polarssl=$HOME/prebuilt
 make && make install
 ```
+```
+pacman -Syu gcc autoconf libtool automake make zlib openssl asciidoc xmlto pcre-devel mingw-w64-cross-headers-git mingw-w64-x86_64-headers-git mingw-w64-x86_64-mbedtls mingw-w64-x86_64-libsodium zlib-devel mingw-w64-x86_64-pcre mingw-w64-x86_64-zlib mingw-w64-x86_64-openssl
+ln -s /mingw64/lib /lib
+./configure CFLAGS="-static"
+make -j8 LDFLAGS="-all-static"
+```
 
 ## Usage
 
