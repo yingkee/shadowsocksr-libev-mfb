@@ -326,6 +326,16 @@ make && make install
 make && make install
 ```
 
+### msys2 compiled OK on windows
+we can only compile ss-local.exe ok 
+because usually we won't make a ss-server to run on windows and truely it is not finished also
+
+```
+pacman -Syu mingw-w64-x86_64-toolchain git autoconf libtool automake make  asciidoc xmlto mingw-w64-cross-headers-git mingw-w64-x86_64-headers-git mingw-w64-x86_64-mbedtls mingw-w64-x86_64-libsodium mingw-w64-x86_64-pcre mingw-w64-x86_64-zlib mingw-w64-x86_64-openssl
+./configure CFLAGS="-static"
+make -j8 LDFLAGS="-all-static"
+```
+
 ## Usage
 
 For a detailed and complete list of all supported arguments, you may refer to the
